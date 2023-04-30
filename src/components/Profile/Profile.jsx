@@ -1,31 +1,40 @@
 import PropTypes from 'prop-types';
-import css from './Profile.module.css';
+import {
+  ProfileCard,
+  ProfileDescription,
+  ProfileName,
+  ProfileInfo,
+  Stats,
+  StatsLabel,
+} from './Profile.styled';
 
 export const Profile = ({ username, tag, location, avatar, stats }) => {
-  return (
-    <div className={css.profile}>
-      <div className="description">
-        <img src={avatar} alt="User avatar" className="avatar" />
-        <p className="name">{username}</p>
-        <p className="tag">@{tag}</p>
-        <p className="location">{location}</p>
-      </div>
+  const { followers, views, likes } = stats;
 
-      <ul className="stats">
+  return (
+    <ProfileCard>
+      <ProfileDescription>
+        <img src={avatar} alt="User avatar" className="avatar" height={80} />
+        <ProfileName>{username}</ProfileName>
+        <ProfileInfo>@{tag}</ProfileInfo>
+        <ProfileInfo>{location}</ProfileInfo>
+      </ProfileDescription>
+
+      <Stats>
         <li>
-          <span className="label">Followers</span>
-          <span className="quantity">{stats.followers}</span>
+          <StatsLabel>Followers</StatsLabel>
+          <span className="quantity">{followers}</span>
         </li>
         <li>
-          <span className="label">Views</span>
-          <span className="quantity">{stats.views}</span>
+          <StatsLabel>Views</StatsLabel>
+          <span className="quantity">{views}</span>
         </li>
         <li>
-          <span className="label">Likes</span>
-          <span className="quantity">{stats.likes}</span>
+          <StatsLabel className="label">Likes</StatsLabel>
+          <span className="quantity">{likes}</span>
         </li>
-      </ul>
-    </div>
+      </Stats>
+    </ProfileCard>
   );
 };
 
@@ -34,7 +43,7 @@ Profile.propTypes = {
   tag: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  stats: PropTypes.shape({
+  stats: PropTypes.exact({
     followers: PropTypes.number.isRequired,
     views: PropTypes.number.isRequired,
     likes: PropTypes.number.isRequired,
